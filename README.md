@@ -9,11 +9,6 @@ Description
 This repository contains the memos, logs and packages developed at Duke University, for Jackal robots by [Clearpath](https://www.clearpathrobotics.com) equipped with standard hardware plus the [Velodyne LiDAR](velodynelidar.com/). 
 
 
-# <p align="center">  
-#   <img src="https://github.com/MengGuo/P_MDP_TG/blob/master/MDP_TG/figures/risk.png" width="600"/>
-# </p>
-
-
 
 -----
 Part I: Jackal Initial Setup
