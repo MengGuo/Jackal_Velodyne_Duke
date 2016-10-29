@@ -61,7 +61,8 @@ x.x.x.x1	  Jackal_computer_name
 ```
 roslaunch jackal_viz view_robot.launch
 ```
-You will see the Jackal 3D model as below and you can add sensor data by topic (as shown in the last part of the [offcial tutorial](https://www.clearpathrobotics.com/assets/guides/jackal/simulation.html)). For velodyne, it is `/pointcloud2` .
+
+You will see the Jackal 3D model as below and you can add sensor data by topic (as shown in the last part of the [offcial tutorial](https://www.clearpathrobotics.com/assets/guides/jackal/simulation.html)). For velodyne, it is `/pointcloud2` . Drive the Jackal around by `interact`.
 
 
 
