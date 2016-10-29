@@ -58,6 +58,8 @@ This markdown contains the initial steps we took to set up the Jackal, which inv
     You will see the Jackal 3D model as below and you can add sensor data by topic (as shown in the last part of the [offcial tutorial](https://www.clearpathrobotics.com/assets/guides/jackal/simulation.html)). For velodyne, it is `/pointcloud2` . Drive the Jackal around by `interact`.
 
 
-
-
+-----
+Following Work
+-----
+Tests related to navigation, mapping and localization, see the [navigation folder]()
 
