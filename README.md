@@ -42,19 +42,13 @@ export ROS_MASTER_URI = x.x.x.x1
 
 After the workstation is subscribed to the ROS master on Jackal, you should be able to see all the ROS messages on your workstation.
 
-* Step 3. Visualize Jackal in Rviz.
-
-Before launching Rviz, you need to do these things:
-
+* Step 3. Visualize Jackal in Rviz. Before launching Rviz, you need to do these things:
   * **copy** the customized packages from `jackal_name:~/catkin_ws` to `workstation:~/catkin_ws`, via `scp`.
-
   * add in workstation's `/etc/hosts` the computer name and IP of Jackal (_critical_):
-
 ```
 # at workstation, ~/etc/hosts
 x.x.x.x1	  Jackal_computer_name
 ```
-
   * install `jackal_viz` from [ros wiki](http://wiki.ros.org/jackal_viz). Then launch the visualization:
 
 ```
