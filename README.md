@@ -61,5 +61,5 @@ This markdown contains the initial steps we took to set up the Jackal, which inv
 -----
 Following Work
 -----
-Tests related to navigation, mapping and localization, see the [navigation folder]()
+Tests related to navigation, mapping and localization, see the [navigation folder](https://github.com/MengGuo/Jackal_Velodyne_Duke/tree/master/navigation)
 

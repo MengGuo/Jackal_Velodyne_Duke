@@ -8,13 +8,13 @@ Description
 -----
 This repository contains the memos, logs and packages developed at Duke University, for Jackal robots by [Clearpath](https://www.clearpathrobotics.com) equipped with standard hardware plus the [Velodyne LiDAR](velodynelidar.com/). 
 
-The offical [Jackal navigation package](https://github.com/jackal/jackal/tree/indigo-devel/jackal_navigation) is built on the [ROS navigation stack](http://wiki.ros.org/navigation), [`move_base`](http://wiki.ros.org/move_base?distro=kinetic) in particular.   
+We focused on testing the offical [Jackal navigation package](https://github.com/jackal/jackal/tree/indigo-devel/jackal_navigation), which  is built on the [ROS navigation stack](http://wiki.ros.org/navigation), particularly the [`move_base`](http://wiki.ros.org/move_base?distro=kinetic) package.
 
 The test consists of _three_ parts: 1. basic navigation, 2. mapping, 3. localization. 
 
 
 -----
-Part One: Basic Navigation
+Part one: basic navigation
 -----
 
 
@@ -22,12 +22,12 @@ Part One: Basic Navigation
 
 
 -----
-Part Two: Mapping
+Part two: mapping
 -----
 
 
 
 
 -----
-Part Three: Localization
+Part three: localization
 -----
