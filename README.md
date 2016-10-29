@@ -38,7 +38,6 @@ export ROS_IP = x.x.x.x1
 # at workstation, ~/.bashrc
 export ROS_IP = x.x.x.x2
 export ROS_MASTER_URI = x.x.x.x1
-
 ```
 
 After the workstation is subscribed to the ROS master on Jackal, you should be able to see all the ROS messages on your workstation.
@@ -47,16 +46,16 @@ After the workstation is subscribed to the ROS master on Jackal, you should be a
 
 Before launching Rviz, you need to do these things:
 
-⋅⋅* **copy** the customized packages from `jackal_name:~/catkin_ws` to `workstation:~/catkin_ws`, via `scp`.
+  * **copy** the customized packages from `jackal_name:~/catkin_ws` to `workstation:~/catkin_ws`, via `scp`.
 
-⋅⋅* add in workstation's `/etc/hosts` the computer name and IP of Jackal (_critical_):
+  * add in workstation's `/etc/hosts` the computer name and IP of Jackal (_critical_):
 
 ```
 # at workstation, ~/etc/hosts
 x.x.x.x1	  Jackal_computer_name
 ```
 
-⋅⋅* install `jackal_viz` from [ros wiki](http://wiki.ros.org/jackal_viz). Then launch the visualization:
+  * install `jackal_viz` from [ros wiki](http://wiki.ros.org/jackal_viz). Then launch the visualization:
 
 ```
 roslaunch jackal_viz view_robot.launch
