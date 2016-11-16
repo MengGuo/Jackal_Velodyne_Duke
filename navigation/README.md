@@ -26,7 +26,7 @@ Jackal navigation should be able to run right out of the box, if a 2D laser is e
 
 which basically activate the move_base node with the appropriate configuration parameters for the jackal dynamic model, sensor model, local and global planner. More details can be found here.
 
-Then in your workstation, run Rviz with the configuration I navigation:
+Then in your workstation, run Rviz with the configuration  navigation:
 
 Try to click on the 2D navigation and set the goal point behind an obstacle, you will see that Jackal follows a straight path and collide into the obstacle. Since move_base is designed to handle both static and dynamic obstacles, there is something wrong with the interface.
 
