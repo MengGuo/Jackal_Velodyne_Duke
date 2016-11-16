@@ -41,7 +41,7 @@ Clearpath provides a [Jackal navigation package](https://github.com/jackal/jacka
 
   * **Add pointcloud_to_laserscan**
   
-  So if you take a look at the [configuration of move_base](https://github.com/jackal/jackal/tree/indigo-devel/jackal_navigation/params), particularly for [costmap_common_params](https://github.com/jackal/jackal/blob/indigo-devel/jackal_navigation/params/costmap_common_params.yaml), the following line
+  So if you take a look at the [configuration of move_base](https://github.com/jackal/jackal/tree/indigo-devel/jackal_navigation/params), particularly for [costmap_common_params](https://github.com/jackal/jackal/blob/indigo-devel/jackal_navigation/params/costmap_common_params.yaml), notice the following line
 
   ```
   obstacles_layer:
@@ -64,9 +64,9 @@ Clearpath provides a [Jackal navigation package](https://github.com/jackal/jacka
         min_height: 0.25
         max_height: 0.75
 
-        angle_min: -1.5708
-        angle_max: 1.5708
-        angle_increment: 0.087
+        angle_min: -3.1415
+        angle_max: 3.1415
+        angle_increment: 0.01
         scan_time: 0.1
         range_min: 0.9
         range_max: 130
