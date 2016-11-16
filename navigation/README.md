@@ -81,7 +81,7 @@ Clearpath provides a [Jackal navigation package](https://github.com/jackal/jacka
 
   After launching it in another terminal of Jackal computer, you can see grey 2D laser points in Rviz by subscribing to `/front/scan`, as shown below:
 
-  It means we have successfully convert the point loud to 2d laser, which is the only sensory input for gmapping and amcl used later.
+  It means we have successfully convert the pointloud from `/Velodyne_points` to 2D laserscan `/front/scan`, which is the only allowed sensory input for gmapping and amcl used later.
 
   * **Add tf transformation.**
 
