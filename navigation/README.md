@@ -21,7 +21,8 @@ Part one: autonomous navigation
 
 Clearpath provides a [Jackal navigation package](https://github.com/jackal/jackal/tree/indigo-devel/jackal_navigation), which is great. So install it either via `apt-get install` or _download the source_ from github and `catkin make`. The first method ensures it is always up-to-date via package management while the second allows local modification.
 
-  * Default navigation package
+  * **Default navigation package**
+  
   Jackal navigation should be able to run right out of the box, **if** a 2D laser is equipped for Jackal, such as the SICK scanner. Namely, `ssh` into Jackal and run the following node:
 
   ```
@@ -38,7 +39,8 @@ Clearpath provides a [Jackal navigation package](https://github.com/jackal/jacka
 
   Try to click on the 2D navigation and set the goal point behind an obstacle, you will see that Jackal follows a straight path and collide into the obstacle. Since `move_base` is designed to handle both static and dynamic obstacles, we realize there is something wrong with the interface between `Jackal navigation` and `move_base`.
 
-  * Add pointcloud_to_laserscan 
+  * **Add pointcloud_to_laserscan**
+  
   So if you take a look at the [configuration of move_base](https://github.com/jackal/jackal/tree/indigo-devel/jackal_navigation/params), particularly for [costmap_common_params](https://github.com/jackal/jackal/blob/indigo-devel/jackal_navigation/params/costmap_common_params.yaml), the following line
 
   ```
@@ -77,11 +79,11 @@ Clearpath provides a [Jackal navigation package](https://github.com/jackal/jacka
   ```
 
 
-After launching it in another terminal of Jackal computer, you can see grey 2D laser points in Rviz by subscribing to `/front/scan`, as shown below:
+  After launching it in another terminal of Jackal computer, you can see grey 2D laser points in Rviz by subscribing to `/front/scan`, as shown below:
 
-It means we have successfully convert the point loud to 2d laser, which is the only sensory input for gmapping and amcl used later.
+  It means we have successfully convert the point loud to 2d laser, which is the only sensory input for gmapping and amcl used later.
 
-  * Add tf transformation
+  * **Add tf transformation**
 
 
 
