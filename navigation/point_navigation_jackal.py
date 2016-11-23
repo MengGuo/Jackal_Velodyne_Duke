@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import roslib, rospy
-roslib.load_manifest('Jackal_Velodyne_Duke')
+roslib.load_manifest('jackal_velodyne_duke')
 import sys
 
 import time
@@ -23,7 +23,7 @@ def PoseCallback(posedata):
     global robot_pose # [time, [x,y,yaw]]
     header = posedata.header
     pose = posedata.pose
-    if header.stamp > robot_pose[0]:
+    if (not robot_pose[0]) or (header.stamp > robot_pose[0]):
         # more recent pose data received
         robot_pose[0] = header.stamp
         # TODO: maybe add covariance check here?
@@ -38,32 +38,32 @@ def SendGoal(GoalPublisher, goal, time_stamp):
     GoalMsg = PoseStamped()
     #GoalMsg.header.seq = 0
     GoalMsg.header.stamp = time_stamp
-    GoalMsg.header.frame_id = '1'
-    GoalMsg.pose.x = goal[0]
-    GoalMsg.pose.y = goal[1]
-    #GoalMsg.pose.z = 0.0
+    GoalMsg.header.frame_id = 'map'
+    GoalMsg.pose.position.x = goal[0]
+    GoalMsg.pose.position.y = goal[1]
+    #GoalMsg.pose.position.z = 0.0
     quaternion = quaternion_from_euler(0, 0, goal[2])
-    GoalMsg.orientation.x = quaternion[0]
-    GoalMsg.orientation.y = quaternion[1]
-    GoalMsg.orientation.z = quaternion[2]
-    GoalMsg.orientation.w = quaternion[3]
+    GoalMsg.pose.orientation.x = quaternion[0]
+    GoalMsg.pose.orientation.y = quaternion[1]
+    GoalMsg.pose.orientation.z = quaternion[2]
+    GoalMsg.pose.orientation.w = quaternion[3]
     GoalPublisher.publish(GoalMsg)
 
 
 def SendInitialPose(InitialPosePublisher, initial_pose, time_stamp):
     # goal: [x, y, yaw]
-    InitialPoseMsg = PoseStamped()
+    InitialPoseMsg = PoseWithCovarianceStamped()
     #InitialPoseMsg.header.seq = 0
     InitialPoseMsg.header.stamp = time_stamp
-    InitialPoseMsg.header.frame_id = '1'
-    InitialPoseMsg.pose.x = initial_pose[0]
-    InitialPoseMsg.pose.y = initial_pose[1]
-    #InitialPoseMsg.pose.z = 0.0
+    InitialPoseMsg.header.frame_id = 'map'
+    InitialPoseMsg.pose.pose.position.x = initial_pose[0]
+    InitialPoseMsg.pose.pose.position.y = initial_pose[1]
+    #InitialPoseMsg.pose.position.z = 0.0
     quaternion = quaternion_from_euler(0, 0, initial_pose[2])
-    InitialPoseMsg.orientation.x = quaternion[0]
-    InitialPoseMsg.orientation.y = quaternion[1]
-    InitialPoseMsg.orientation.z = quaternion[2]
-    InitialPoseMsg.orientation.w = quaternion[3]
+    InitialPoseMsg.pose.pose.orientation.x = quaternion[0]
+    InitialPoseMsg.pose.pose.orientation.y = quaternion[1]
+    InitialPoseMsg.pose.pose.orientation.z = quaternion[2]
+    InitialPoseMsg.pose.pose.orientation.w = quaternion[3]
     InitialPosePublisher.publish(InitialPoseMsg)    
 
 
@@ -72,16 +72,19 @@ global robot_pose
 rospy.init_node('navigate_goal_sequence')
 
 
-INITIAL = [10.0, 5.0, PI*0]
-GOAL = [(1.0, 1.0, PI*0.5), (0.5, 0.6, PI*0.2), (1.5, 0.9, PI*0.8), (1.2, 0.2, -PI*0.5)]
+INITIAL = [-3.1147847748884683, -1.1183813706038452, 0.7960764716766603]
+GOAL = [[6.80652717383558, 8.011186314690564, 0.7987732650786219],[-3.1147847748884683, -1.1183813706038452, 0.7960764716766603]]
 
-robot_pose = [0, INITIAL]
+robot_pose = [None, INITIAL]
 #----------
 #publish to
 #----------
 InitialPosePublisher = rospy.Publisher('initialpose', PoseWithCovarianceStamped, queue_size = 100)
 
-SendInitialPose(InitialPosePublisher, INITIAL, 0)
+for i in xrange(10):
+    SendInitialPose(InitialPosePublisher, INITIAL, rospy.Time.now())
+    rospy.sleep(0.1)
+    
 print('Initial pose set to %s.' %INITIAL)
 
 GoalPublisher = rospy.Publisher('move_base_simple/goal', PoseStamped, queue_size = 100)
@@ -101,9 +104,9 @@ while not rospy.is_shutdown():
     try:
         t = rospy.Time.now()-t0
         print '----------Time: %.2f----------' %t.to_sec()
-        while (k <= len(GOAL) -1):
+        while (k <= len(GOAL) -1) and (not rospy.is_shutdown()):
             current_goal = GOAL[k]
-            if ((norm2(robot_pose[1][0:2], goal[k][0:2]) > reach_xy_bound) or (abs(robot_pose[1][2])-goal[k][2]) > reach_yaw_bound):
+            if ((norm2(robot_pose[1][0:2], current_goal[0:2]) > reach_xy_bound) or (abs(robot_pose[1][2])-current_goal[2]) > reach_yaw_bound):
                 SendGoal(GoalPublisher, current_goal, t)
                 print('Goal %s sent.' %(str(current_goal)))
                 rospy.sleep(10)
