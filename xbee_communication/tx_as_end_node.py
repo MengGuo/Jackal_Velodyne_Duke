@@ -9,15 +9,15 @@ ser = serial.Serial('/dev/ttyUSB0', 9600)
 # Use an XBee 802.15.4 device
 # To use with an XBee ZigBee device, replace with:
 #xbee = ZigBee(ser)
+
 #xbee = XBee(ser)
 xbee = ZigBee(ser)
 
-# Set remote DIO pin 2 to low (mode 4)
-xbee.remote_at(
-  dest_addr='\xFF\xFF',
-  command='D2',
-  parameter='\x04')
+xbee.send('tx',
+          dest_addr_long = '\x00\x00\x00\x00\x00\x00\x00\x00',
+          dest_addr = '\x00\x00',
+          data = 'Hello World\n')
 
-xbee.remote_at(
-  dest_addr='\xFF\xFF',
-  command='WR')
+print(xbee.wait_read_frame())
+
+ser.close()
