@@ -16,7 +16,7 @@ xbee = ZigBee(ser)
 xbee.send('tx',
           dest_addr_long = '\x00\x00\x00\x00\x00\x00\x00\x00',
           dest_addr = '\x00\x00',
-          data = 'Hello World\n')
+          data = 'Hello World!\r\n')
 
 print(xbee.wait_read_frame())
 
