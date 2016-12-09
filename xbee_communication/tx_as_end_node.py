@@ -4,6 +4,7 @@
 from xbee import XBee,ZigBee
 import serial
 
+import numpy as np
 ser = serial.Serial('/dev/ttyUSB0', 9600)
 
 # Use an XBee 802.15.4 device
@@ -12,11 +13,13 @@ ser = serial.Serial('/dev/ttyUSB0', 9600)
 
 #xbee = XBee(ser)
 xbee = ZigBee(ser)
+N = 1000
+vector = np.ones((N,N))
 
 xbee.send('tx',
           dest_addr_long = '\x00\x00\x00\x00\x00\x00\x00\x00',
           dest_addr = '\x00\x00',
-          data = 'Hello World!\r\n')
+          data = '%s\r\n' %str(vector))
 
 print(xbee.wait_read_frame())
 
