@@ -86,20 +86,23 @@ Clearpath provides a [Jackal navigation package](https://github.com/jackal/jacka
   * **Add tf transformation.**
 
   However even with the `pointcloud_to_laserscan` enabled, repeat the point-to-point navigation in Rviz again. You will see that that the Jackal still runs directly into obstacles. Then we realize there is a warning message appearing in the `Jackal_navigation` terminal:
-
-
-  It means that the `tf` relation from `\odom` to `\front\scan` is not constructed. If we print out the transformation relation from `\odom` to `\velodyne`, the results are normal (but no transformation relation from `\odom` to `\front\scan`), which is crucial for `move\_base`. Thus we add a static mapping from `\odom` to `\front\scan` in the same `point2laser.launch` file:
-
+  ```
+  the message from [/odom /front_laser] 100% dropped.
   ```
 
-  ```
 
-  Once it is done, re-launch it. You can verify that the warning message is gone and the `tf` relation from `\odom` to `\front\scan` is established. Then launch the `odom_navigation.launch` again:
+  It means that the `tf` relation from `/velodyne` to `/front_laser` is not constructed. If we print out the transformation relation from `/odom` to `/velodyne`, the results are normal (but no transformation relation from `/odom` to `/front_laser`), which is crucial for `move_base`. Thus we add a **static identity mapping from `/velodyne` to `/front_laser`** in the same `point2laser.launch` file:
+
+  ```
+  <node pkg="tf" type="static_transform_publisher" name="velodyne_to_front_laser" 
+args="0 0 0 0 0 0 /velodyne /font_laser 100" />
+  ```
+  Thus the complete `point2laser.launch` file is [here](). Once it is done, re-launch it. You can verify that the warning message is gone and the `tf` relation from `/odom` to `/front_laser` is established. Then launch the `odom_navigation.launch` again:
 
   ```
   roslaunch jackal_navigation odom_navigation_demo.launch
   ```
-  You will see that now automatons navigation is working with collision avoidance, see [video1], [video2].
+  You will see that now automatons navigation is working with collision avoidance, see [video1](https://vimeo.com/189086502), [video2](https://vimeo.com/189087199).
   
 -----
 Part two: mapping
