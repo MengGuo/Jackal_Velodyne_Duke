@@ -37,7 +37,7 @@ Clearpath provides a [Jackal navigation package](https://github.com/jackal/jacka
   roslaunch jackal_viz view_robot.launch config:=navigation
   ```
 
-  Try to click on the 2D navigation and set the goal point behind an obstacle, you will see that Jackal follows a straight path and collide into the obstacle. Since `move_base` is designed to handle both static and dynamic obstacles, we realize there is something wrong with the interface between `Jackal navigation` and `move_base`.
+  Try to click on the 2D navigation and set the goal point behind an obstacle, you will see that Jackal follows a straight path and **collide** into the obstacle. Since `move_base` is designed to handle both static and dynamic obstacles, we realize there is something wrong with the interface between `Jackal navigation` and `move_base`.
 
   * **Add pointcloud_to_laserscan.**
   
@@ -51,7 +51,7 @@ Clearpath provides a [Jackal navigation package](https://github.com/jackal/jacka
   
   which says the obstacle layer relies on laser scan from topic `/front/scan`. It is easy to check that no nodes are publishing to it.
 
-  Thus we use a ROS package [pointcloud_to_laserscan](http://wiki.ros.org/pointcloud_to_laserscan) that transform the point loud from Velodyne to virtual 2D laser scan. Partially, after installing `pointcloud_to_laserscan`, we create the following launch file within its installation directory:
+  Thus we use a ROS package [pointcloud_to_laserscan](http://wiki.ros.org/pointcloud_to_laserscan) that transform the point loud from Velodyne to virtual 2D laser scan. Partially, after installing `pointcloud_to_laserscan`, we create the following launch file `point2laser.launch` within its installation directory:
 
   ```
   <launch>
@@ -81,13 +81,26 @@ Clearpath provides a [Jackal navigation package](https://github.com/jackal/jacka
 
   After launching it in another terminal of Jackal computer, you can see grey 2D laser points in Rviz by subscribing to `/front/scan`, as shown below:
 
-  It means we have successfully convert the pointloud from `/Velodyne_points` to 2D laserscan `/front/scan`, which is the only allowed sensory input for gmapping and amcl used later.
+  It means we have successfully convert the pointcloud from `/Velodyne_points` to 2D laserscan `/front/scan`, which is the **only** allowed sensory input for gmapping and amcl used later.
 
   * **Add tf transformation.**
 
+  However even with the `pointcloud_to_laserscan` enabled, repeat the point-to-point navigation in Rviz again. You will see that that the Jackal still runs directly into obstacles. Then we realize there is a warning message appearing in the `Jackal_navigation` terminal:
 
 
+  It means that the `tf` relation from `\odom` to `\front\scan` is not constructed. If we print out the transformation relation from `\odom` to `\velodyne`, the results are normal (but no transformation relation from `\odom` to `\front\scan`), which is crucial for `move\_base`. Thus we add a static mapping from `\odom` to `\front\scan` in the same `point2laser.launch` file:
 
+  ```
+
+  ```
+
+  Once it is done, re-launch it. You can verify that the warning message is gone and the `tf` relation from `\odom` to `\front\scan` is established. Then launch the `odom_navigation.launch` again:
+
+  ```
+  roslaunch jackal_navigation odom_navigation_demo.launch
+  ```
+  You will see that now automatons navigation is working with collision avoidance, see [video1], [video2].
+  
 -----
 Part two: mapping
 -----
