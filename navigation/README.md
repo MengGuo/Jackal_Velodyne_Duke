@@ -19,10 +19,10 @@ Make sure you have read the [official navigation tutorial](https://www.clearpath
 Part one: autonomous navigation
 -----
 
-Clearpath provides a [Jackal navigation package](https://github.com/jackal/jackal/tree/indigo-devel/jackal_navigation), which is great. So install it either via `apt-get install` or _download the source_ from github and `catkin make`. The first method ensures it is always up-to-date via package management while the second allows local modification.
+Clearpath provides a [Jackal navigation package](https://github.com/jackal/jackal/tree/indigo-devel/jackal_navigation), which is great. So install it either via `apt-get install` or _download the source_ from github and `catkin make`. The first method ensures it is always up-to-date via package management while the second allows local modification.   This part corresponds to the **NAVIGATION WITHOUT A MAP** part of [official Jackal navigation](https://www.clearpathrobotics.com/assets/guides/jackal/navigation.html).
 
   * **Try default navigation package.**
-  
+
   Jackal navigation should be able to run right out of the box, **if** a 2D laser is equipped for Jackal, such as the SICK scanner. Namely, `ssh` into Jackal and run the following node:
 
   ```
@@ -81,6 +81,12 @@ Clearpath provides a [Jackal navigation package](https://github.com/jackal/jacka
 
   After launching it in another terminal of Jackal computer, you can see grey 2D laser points in Rviz by subscribing to `/front/scan`, as shown below:
 
+<p align="center">  
+  <img src="https://github.com/MengGuo/Jackal_Velodyne_Duke/blob/master/navigation/figures/pointcolud2laserscan.png" width="800"/>
+</p>
+
+
+
   It means we have successfully convert the pointcloud from `/Velodyne_points` to 2D laserscan `/front/scan`, which is the **only** allowed sensory input for gmapping and amcl used later.
 
   * **Add tf transformation.**
@@ -97,21 +103,36 @@ Clearpath provides a [Jackal navigation package](https://github.com/jackal/jacka
   <node pkg="tf" type="static_transform_publisher" name="velodyne_to_front_laser" 
 args="0 0 0 0 0 0 /velodyne /font_laser 100" />
   ```
-  Thus the complete `point2laser.launch` file is [here](). Once it is done, re-launch it. You can verify that the warning message is gone and the `tf` relation from `/odom` to `/front_laser` is established. Then launch the `odom_navigation.launch` again:
+  
+  Thus the complete `point2laser.launch` file is [here](https://github.com/MengGuo/Jackal_Velodyne_Duke/blob/master/navigation/point2laser.launch). Once it is done, re-launch it. You can verify that the warning message is gone and the `tf` relation from `/odom` to `/front_laser` is established. Then launch the `odom_navigation.launch` again:
 
   ```
   roslaunch jackal_navigation odom_navigation_demo.launch
   ```
   You will see that now automatons navigation is working with collision avoidance, see [video1](https://vimeo.com/189086502), [video2](https://vimeo.com/189087199).
+
+  <p align="center">  
+  <img src="https://github.com/MengGuo/Jackal_Velodyne_Duke/blob/master/navigation/figures/odom_navg.png" width="800"/>
+  </p>
   
 -----
 Part two: mapping
 -----
 
+  Once the `odom_navigation.launch` is working with static and dynamic collision avoidance. You may move the second part of the navigation task, i.e., to make a map using `gmapping`. This part corresponds to the **MAKING A MAP** part of [official Jackal navigation](https://www.clearpathrobotics.com/assets/guides/jackal/navigation.html).
 
 
 
+  <p align="center">  
+  <img src="https://github.com/MengGuo/Jackal_Velodyne_Duke/blob/master/navigation/figures/gmapping.png" width="800"/>
+  </p>
+  
 -----
 Part three: localization
 -----
- 
+
+
+
+  <p align="center">  
+  <img src="https://github.com/MengGuo/Jackal_Velodyne_Duke/blob/master/navigation/figures/amcl.png" width="800"/>
+  </p>
