@@ -81,9 +81,9 @@ Clearpath provides a [Jackal navigation package](https://github.com/jackal/jacka
 
   After launching it in another terminal of Jackal computer, you can see grey 2D laser points in Rviz by subscribing to `/front/scan`, as shown below:
 
-<p align="center">  
-  <img src="https://github.com/MengGuo/Jackal_Velodyne_Duke/blob/master/navigation/figures/pointcolud2laserscan.png" width="500"/>
-</p>
+  <p align="center">  
+    <img src="https://github.com/MengGuo/Jackal_Velodyne_Duke/blob/master/navigation/figures/pointcolud2laserscan.png" width="500"/>
+  </p>
 
 
 
@@ -95,7 +95,6 @@ Clearpath provides a [Jackal navigation package](https://github.com/jackal/jacka
   ```
   the message from [/odom /front_laser] 100% dropped.
   ```
-
 
   It means that the `tf` relation from `/velodyne` to `/front_laser` is not constructed. If we print out the transformation relation from `/odom` to `/velodyne`, the results are normal (but no transformation relation from `/odom` to `/front_laser`), which is crucial for `move_base`. Thus we add a **static identity mapping from `/velodyne` to `/front_laser`** in the same `point2laser.launch` file:
 
