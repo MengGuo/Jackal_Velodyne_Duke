@@ -160,7 +160,7 @@ Part three: localization
   roslaunch jackal_viz view_robot.launch config:=localization
   ```
   You can now keep track of the real-time localization of the robot via the topic `/amcl_pose`. We use the Python [script](https://github.com/MengGuo/Jackal_Velodyne_Duke/blob/master/navigation/amcl_pose_to_2D_Euler.py) to translate the `PoseWithCovarianceStamped` message from `/amcl_pose` to `(robot_pose_x,robot_pose_y,robot_orientation)`.
-  Moreover, we use another Python [script](https://github.com/MengGuo/Jackal_Velodyne_Duke/blob/master/navigation/seq_goal_nav.py) to **set initial pose estimation** and *send a sequence of global waypoints*, without using the Rviz. 
+  Moreover, we use another Python [script](https://github.com/MengGuo/Jackal_Velodyne_Duke/blob/master/navigation/seq_goal_nav.py) to **set initial pose estimation** and **send a sequence of global waypoints**, without using the Rviz. 
 
 
   <p align="center">  
