@@ -9,7 +9,7 @@ Description
 This repository contains the memos, logs and packages developed at Duke University, for Jackal robots by [Clearpath](https://www.clearpathrobotics.com) equipped with standard hardware plus the [Velodyne LiDAR](velodynelidar.com/). 
 
 After following the basic [Jackal setup tutorial](https://github.com/MengGuo/Jackal_Velodyne_Duke), you should be able to see Jackal via Rviz and manually navigate it. 
-In this part, we focused on testing the offical [Jackal navigation package](https://github.com/jackal/jackal/tree/indigo-devel/jackal_navigation), which is built on the [ROS navigation stack](http://wiki.ros.org/navigation), particularly the [`move_base`](http://wiki.ros.org/move_base?distro=kinetic) package. The test consists of _three_ parts: 1. autonomous navigation via Ros `move_base`; 2. mapping via `gmapping`; and 3. self-localization via `amcl`.
+In this part, we focused on testing the official [Jackal navigation package](https://github.com/jackal/jackal/tree/indigo-devel/jackal_navigation), which is built on the [ROS navigation stack](http://wiki.ros.org/navigation), particularly the [`move_base`](http://wiki.ros.org/move_base?distro=kinetic) package. The test consists of _three_ parts: 1. autonomous navigation via Ros `move_base`; 2. mapping via `gmapping`; and 3. self-localization via `amcl`.
 
 Make sure you have read the [official navigation tutorial](https://www.clearpathrobotics.com/assets/guides/jackal/navigation.html) from clearpath.
 
@@ -82,7 +82,7 @@ Clearpath provides a [Jackal navigation package](https://github.com/jackal/jacka
   After launching it in another terminal of Jackal computer, you can see grey 2D laser points in Rviz by subscribing to `/front/scan`, as shown below:
 
 <p align="center">  
-  <img src="https://github.com/MengGuo/Jackal_Velodyne_Duke/blob/master/navigation/figures/pointcolud2laserscan.png" width="800"/>
+  <img src="https://github.com/MengGuo/Jackal_Velodyne_Duke/blob/master/navigation/figures/pointcolud2laserscan.png" width="500"/>
 </p>
 
 
@@ -109,7 +109,7 @@ args="0 0 0 0 0 0 /velodyne /font_laser 100" />
   ```
   roslaunch jackal_navigation odom_navigation_demo.launch
   ```
-  You will see that now automatons navigation is working with collision avoidance, see [video1](https://vimeo.com/189086502), [video2](https://vimeo.com/189087199).
+  You will see that now automatons navigation is working with collision avoidance, see [[video1]](https://vimeo.com/189086502), [[video2]](https://vimeo.com/189087199).
 
   <p align="center">  
   <img src="https://github.com/MengGuo/Jackal_Velodyne_Duke/blob/master/navigation/figures/odom_navg.png" width="800"/>
@@ -121,10 +121,25 @@ Part two: mapping
 
   Once the `odom_navigation.launch` is working with static and dynamic collision avoidance. You may move the second part of the navigation task, i.e., to make a map using `gmapping`. This part corresponds to the **MAKING A MAP** part of [official Jackal navigation](https://www.clearpathrobotics.com/assets/guides/jackal/navigation.html).
 
+  First you need to launch the modified `point2laser.launch` file from [here](https://github.com/MengGuo/Jackal_Velodyne_Duke/blob/master/navigation/point2laser.launch). Then you can launch the `gmapping_demo.launch` from the [Jackal navigation package](https://github.com/jackal/jackal/tree/indigo-devel/jackal_navigation) at the Jackal onboard computer:
 
+  ```
+  roslaunch jackal_navigation gmapping_demo.launch
+  ```
 
+  Then you can visualize everything on the desktop via:
+  
+  ```
+  roslaunch jackal_viz view_robot.launch config:=gmapping
+  ```
+  Drive Jackal across the workspace you want to map and save the map in the end using
+  ```
+  rosrun map_server map_saver -f workspace
+  ```
+  This will create a `workspace.yaml` and `workspace.pgm` file in your current directory. Note that any static it came across on the way will belong to the global static map.
+  
   <p align="center">  
-  <img src="https://github.com/MengGuo/Jackal_Velodyne_Duke/blob/master/navigation/figures/gmapping.png" width="800"/>
+  <img src="https://github.com/MengGuo/Jackal_Velodyne_Duke/blob/master/navigation/figures/gmapping.png" width="300"/>
   </p>
   
 -----
@@ -132,7 +147,23 @@ Part three: localization
 -----
 
 
+  Once you have created a static global map `workspace.yaml`. You may move the third part of the navigation task, i.e., to self-localization using `amcl`. This part corresponds to the **NAVIGATION WITH A MAP** part of [official Jackal navigation](https://www.clearpathrobotics.com/assets/guides/jackal/navigation.html).
+
+  First you need to launch the modified `point2laser.launch` file from [here](https://github.com/MengGuo/Jackal_Velodyne_Duke/blob/master/navigation/point2laser.launch). Then you can launch the `amcl_demo.launch` from the [Jackal navigation package](https://github.com/jackal/jackal/tree/indigo-devel/jackal_navigation) at the Jackal onboard computer:
+
+  ```
+  roslaunch jackal_navigation amcl_demo.launch map_file:=/path/to/my/workspace.yaml
+  ```
+
+  Then you can visualize everything on the desktop via:
+  
+  ```
+  roslaunch jackal_viz view_robot.launch config:=localization
+  ```
+  You can now keep track of the real-time localization of the robot via the topic `/amcl_pose`. We use the Python [script](https://github.com/MengGuo/Jackal_Velodyne_Duke/blob/master/navigation/amcl_pose_to_2D_Euler.py) to translate the `PoseWithCovarianceStamped` message from `/amcl_pose` to `(robot_pose_x,robot_pose_y,robot_orientation)`.
+  Moreover, we use another Python [script](https://github.com/MengGuo/Jackal_Velodyne_Duke/blob/master/navigation/seq_goal_nav.py) to **set initial pose estimation** and *send a sequence of global waypoints*, without using the Rviz. 
+
 
   <p align="center">  
-  <img src="https://github.com/MengGuo/Jackal_Velodyne_Duke/blob/master/navigation/figures/amcl.png" width="800"/>
+  <img src="https://github.com/MengGuo/Jackal_Velodyne_Duke/blob/master/navigation/figures/amcl.png" width="300"/>
   </p>
