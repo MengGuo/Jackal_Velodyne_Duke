@@ -138,7 +138,7 @@ Part two: mapping
   This will create a `workspace.yaml` and `workspace.pgm` file in your current directory. Note that any static it came across on the way will belong to the global static map.
   
   <p align="center">  
-  <img src="https://github.com/MengGuo/Jackal_Velodyne_Duke/blob/master/navigation/figures/gmapping.png" width="300"/>
+  <img src="https://github.com/MengGuo/Jackal_Velodyne_Duke/blob/master/navigation/figures/gmapping.png" width="500"/>
   </p>
   
 -----
@@ -164,5 +164,5 @@ Part three: localization
 
 
   <p align="center">  
-  <img src="https://github.com/MengGuo/Jackal_Velodyne_Duke/blob/master/navigation/figures/amcl.png" width="300"/>
+  <img src="https://github.com/MengGuo/Jackal_Velodyne_Duke/blob/master/navigation/figures/amcl.png" width="500"/>
   </p>
