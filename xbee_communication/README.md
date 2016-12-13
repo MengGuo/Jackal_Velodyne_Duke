@@ -13,6 +13,21 @@ We intend to transmit data from the Jackal robot to a stationary data center, vi
 Even though Jackal is equipped with powerful wifi/bluetooth communication modules, we use them only for the purpose of monitoring the operation status of Jackal.
 
 
-In particular, we use 
+In particular, we use several [Xbee radio](https://www.digi.com/) modules from Digi, particularly, series 2 with protocol Zigbee. The serial to micro-USB dongle from [SparkFun](https://www.sparkfun.com/products/11812)  is used.
 
+
+-----
+Data transfer in AT mode via XCTU
+-----
+
+[XCTU](https://www.digi.com/products/xbee-rf-solutions/xctu-software/xctu) is the official GUI to configure Xbee easily. The [tutorial](http://www.digi.com/resources/documentation/digidocs/90001458-13/default.htm) from Digi is quite helpful.
+We first tried sending data in AT mode from an end node to a coordinator node, via several relay nodes. 
+
+
+-----
+Data transfer in API mode via Xbee-Python
+-----
+
+In order to send data automatically without using the GUI, we use the [Xbee-Python](https://python-xbee.readthedocs.io/en/latest/) library.
+Particularly, we send a `1000*1000` matrix from the end node via [`tx_end_node.py`](https://github.com/MengGuo/Jackal_Velodyne_Duke/blob/master/xbee_communication/tx_end_node.py) and receive it at the coordinator via [`rx_coordinator.py`](https://github.com/MengGuo/Jackal_Velodyne_Duke/tree/master/xbee_communication).
 
