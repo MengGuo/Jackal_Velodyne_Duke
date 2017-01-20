@@ -93,7 +93,7 @@ Clearpath provides a [Jackal navigation package](https://github.com/jackal/jacka
 
   However even with the `pointcloud_to_laserscan` enabled, repeat the point-to-point navigation in Rviz again. You will see that that the Jackal still runs directly into obstacles. Then we realize there is a warning message appearing in the `Jackal_navigation` terminal:
   ```
-  the message from [/odom /front_laser] 100% dropped.
+  [ WARN] [1484950748.411019910]: Timed out waiting for transform from base_link to map to become available before running costmap, tf error: . canTransform returned after 0.100881 timeout was 0.1.
   ```
 
   It means that the `tf` relation from `/velodyne` to `/front_laser` is not constructed. If we print out the transformation relation from `/odom` to `/velodyne`, the results are normal (but no transformation relation from `/odom` to `/front_laser`), which is crucial for `move_base`. Thus we add a **static identity mapping from `/velodyne` to `/front_laser`** in the same `point2laser.launch` file:
