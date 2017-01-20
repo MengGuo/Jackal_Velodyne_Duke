@@ -103,7 +103,12 @@ Clearpath provides a [Jackal navigation package](https://github.com/jackal/jacka
 args="0 0 0 0 0 0 /velodyne /font_laser 100" />
   ```
   
-  Thus the complete `point2laser.launch` file is [here](https://github.com/MengGuo/Jackal_Velodyne_Duke/blob/master/navigation/point2laser.launch). Once it is done, re-launch it. You can verify that the warning message is gone and the `tf` relation from `/odom` to `/front_laser` is established. Then launch the `odom_navigation.launch` again:
+  Thus the complete `point2laser.launch` file is [here](https://github.com/MengGuo/Jackal_Velodyne_Duke/blob/master/navigation/point2laser.launch). Once it is done, re-launch it, for example by:
+ 
+  ```
+  roslaunch pointcloud_to_laserscan pointcloud2laserscan.launch 
+  ```
+  Then you can verify that the warning message is gone and the `tf` relation from `/odom` to `/front_laser` is established. Then launch the `odom_navigation.launch` again:
 
   ```
   roslaunch jackal_navigation odom_navigation_demo.launch
