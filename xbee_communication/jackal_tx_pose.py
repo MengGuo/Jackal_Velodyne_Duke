@@ -39,6 +39,7 @@ robot_pose = [None, INITIAL]
 ser = serial.Serial('/dev/ttyUSB0', 9600)
 
 # Use an XBee 802.15.4 device
+# IMPORTANT! sudo chmod a+rw /dev/ttyUSB0
 xbee = ZigBee(ser)
 
 
@@ -56,12 +57,13 @@ while not rospy.is_shutdown():
     try:
         t = rospy.Time.now()-t0
         print '----------Time: %.2f----------' %t.to_sec()
-        rospy.sleep(20)
+        rospy.sleep(10)
         print 'robot pose %s' %str(robot_pose)
         xbee.send('tx',
           dest_addr_long = '\x00\x00\x00\x00\x00\x00\x00\x00',
           dest_addr = '\x00\x00',
-          data = '%s\r\n' %str(robot_pose))
+          # for now, only send pose, no timestamp
+          data = '%s\r\n' %str(robot_pose[1]))
         print 'robot pose %s sent via Xbee' %str(robot_pose)
         print(xbee.wait_read_frame())
     except rospy.ROSInterruptException:
