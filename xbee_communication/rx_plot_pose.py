@@ -14,14 +14,16 @@ pose = [0, 0, 0]
 plt.plot([pose[0]], [pose[1]], 'ro')
 plt.ylim([-20,20])
 plt.xlim([-20,20])
+plt.draw()
 
 ack='\x00\x00\x00\x00\x00\x00\x00\x00'
 
 while True:
     incoming = ser.readline().rstrip()
-    print '%s' %incoming
-    ser.write('%s' % ack)
-    m = re.search(r"\[()\]", s)
+    print r'%s' %incoming
+    print list(incoming)
+    ser.write('%s' %ack)
+    m = re.search(r"\[(.*)\]", incoming)
     data = m.group(1).split(',')
     pose = (float(data[0]), float(data[1]), float(data[2]))
     plt.draw() # update the plot
