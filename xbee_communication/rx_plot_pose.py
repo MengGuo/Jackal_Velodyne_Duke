@@ -69,6 +69,7 @@ ack='\x00\x00\x00\x00\x00\x00\x00\x00'
 while True:
     incoming = ser.readline().rstrip()
     print r'%s' %incoming
+    print list(incoming)
     ser.write('%s' %ack)
     m = re.search(r"\[(.*)\]", incoming)
     data = m.group(1).split(',')
