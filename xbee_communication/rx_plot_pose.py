@@ -69,12 +69,14 @@ ack='\x00\x00\x00\x00\x00\x00\x00\x00'
 while True:
     incoming = ser.readline().rstrip()
     print r'%s' %incoming
-    print list(incoming)
-    ser.write('%s' %ack)
-    m = re.search(r"\[(.*)\]", incoming)
-    data = m.group(1).split(',')
-    pose = (float(data[0]), float(data[1]), float(data[2]))
-    print 'new pose %s' %str(pose)
+    #print list(incoming)
+    if incoming:
+        ser.write('%s' %ack)
+        m = re.search(r"\[(.*)\]", incoming)
+        if m:
+            data = m.group(1).split(',')
+            pose = (float(data[0]), float(data[1]), float(data[2]))
+            print 'new pose %s' %str(pose)
     figure = visualize_jackal(figure, pose)
 
 ser.close()
