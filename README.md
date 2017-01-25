@@ -8,9 +8,9 @@ Description
 -----
 This repository contains the memos, logs and packages developed at Duke University, for Jackal robots by [Clearpath](https://www.clearpathrobotics.com) equipped with standard hardware plus the [Velodyne LiDAR](velodynelidar.com/). 
 
-<p align="center">  
-  <img src="https://github.com/MengGuo/Jackal_Velodyne_Duke/blob/master/figures/jackal_lidar.jpg" width="800"/>
-</p>
+  <p align="center">  
+  <img src="https://github.com/MengGuo/Jackal_Velodyne_Duke/blob/master/navigation/figures/odom_navg.png" width="800"/>
+  </p>
 
 
 -----
