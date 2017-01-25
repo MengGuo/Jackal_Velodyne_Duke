@@ -11,6 +11,7 @@ from scipy.misc import imread
 
 import matplotlib
 from matplotlib.patches import Polygon
+from matplotlib import cm
 
 import re
 
@@ -33,22 +34,23 @@ def visualize_jackal(figure, pose, img):
     ax.imshow(img, cmap=cm.Greys_r)
     ax.axis('image')
     if pose:
-        xl = pose[0]
-        yl = pose[1]
-        dl = pose[2]
-        ax.plot(xl, yl, 'ro', markersize=8)
-        L1 = 0.4
-        L2 = 0.8
+        meter_to_pixel = 10.6
+        translation = [80.58, 42.21, 0.83]
+        xl = (pose[0] + translation[0])*meter_to_pixel
+        yl = (pose[1] + translation[1])*meter_to_pixel
+        dl = pose[2] + translation[2]
+        ax.plot(xl, yl, 'ro', markersize=10)
+        L1 = 0.8*meter_to_pixel
+        L2 = 1.6*meter_to_pixel
         car=[(xl-L1,yl-L1), (xl-L1,yl+ L1), (xl, yl+L2), (xl+L1, yl+L1), (xl+L1,yl-L1)]
-        Ecolor = 'Grey'            
-        polygon2 = Polygon(transform(car, [xl,yl], dl), fill = True, facecolor=Ecolor, edgecolor='black', lw=4, zorder=2)
+        polygon2 = Polygon(transform(car, [xl,yl], dl+1.57), fill = True, facecolor='blue', edgecolor='blue', lw=4, zorder=2)
         ax.add_patch(polygon2)    
     ax.grid()
-    ax.set_xlabel('x(m)')
-    ax.set_ylabel('y(m)')
-    ax.set_aspect('equal')
-    ax.set_xlim(-10, 10)
-    ax.set_ylim(-10, 10)
+    # ax.set_xlabel('x(m)')
+    # ax.set_ylabel('y(m)')
+    # ax.set_aspect('equal')
+    # ax.set_xlim(-10, 10)
+    # ax.set_ylim(-10, 10)
     #fig.subplots_adjust(0.003,0.062,0.97,0.94)
     #pyplot.show()
     pyplot.pause(0.01)
@@ -59,15 +61,15 @@ def visualize_jackal(figure, pose, img):
 #==============================
 
 ser = serial.Serial('/dev/ttyUSB0', 9600)
-map_img='./hudson.png'
+map_img='./figures/hudson.png'
 img = imread(map_img)
 
 figure = pyplot.figure()
 pyplot.ion()
 pyplot.draw()
 
-pose = [0,0,0]
-figure = visualize_jackal(figure, pose)
+pose = [-2.98, -1.01, 0.74]
+figure = visualize_jackal(figure, pose, img)
 
 ack='\x00\x00\x00\x00\x00\x00\x00\x00'
 
@@ -82,6 +84,6 @@ while True:
             data = m.group(1).split(',')
             pose = (float(data[0]), float(data[1]), float(data[2]))
             print 'new pose %s' %str(pose)
-    figure = visualize_jackal(figure, pose)
+    figure = visualize_jackal(figure, pose, img)
 
 ser.close()

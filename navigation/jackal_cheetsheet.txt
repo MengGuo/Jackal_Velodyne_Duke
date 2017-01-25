@@ -1,0 +1,35 @@
+==============================
+Jackal IP can not be found
+
+#List IPs on network
+sudo arp-scan -I eth1 -l
+
+========================================
+Jackal amcl navigation
+
+** On Jackal
+
+roslaunch pointcloud_to_laserscan pointcloud2laserscan.launch
+
+----[autonomous navigation]----:
+
+roslaunch jackal_navigation odom_navigation_demo.launch
+
+----[gmapping]----:
+
+roslaunch jackal_navigation gmapping_demo.launch
+
+----[amcl localization]----:
+
+roslaunch jackal_navigation amcl_demo.launch map_file:=/home/administrator/maps/hudson_basement_half.yaml
+
+
+----[XBee]----:
+
+sudo chmod a+rw /dev/ttyUSB0
+
+
+** On PC
+
+roslaunch jackal_viz view_robot.launch config:=localization
+
