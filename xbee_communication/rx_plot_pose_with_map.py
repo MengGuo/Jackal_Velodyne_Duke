@@ -18,6 +18,11 @@ import re
 def norm(pose1, pose2):
     return sqrt((pose1[0]-pose2[0])**2+(pose1[1]-pose2[1])**2)
 
+def transpose(pose, initial_pose, initial_pose_in_map):
+    dif_pose = [pose[i]-initial_pose[i] for i in range(0,3)]
+    
+    return pose_in_map
+
 def transform(car, center, dl):
     new_car = []
     for node in car:
@@ -35,15 +40,14 @@ def visualize_jackal(figure, pose, img):
     ax.axis('image')
     if pose:
         meter_to_pixel = 10.6
-        translation = [80.58, 42.21, 0.83]
-        xl = (pose[0] + translation[0])*meter_to_pixel
-        yl = (pose[1] + translation[1])*meter_to_pixel
-        dl = pose[2] + translation[2]
+        xl = pose[0]*meter_to_pixel
+        yl = pose[1]*meter_to_pixel
+        dl = pose[2]
         ax.plot(xl, yl, 'ro', markersize=10)
         L1 = 0.8*meter_to_pixel
         L2 = 1.6*meter_to_pixel
         car=[(xl-L1,yl-L1), (xl-L1,yl+ L1), (xl, yl+L2), (xl+L1, yl+L1), (xl+L1,yl-L1)]
-        polygon2 = Polygon(transform(car, [xl,yl], dl+1.57), fill = True, facecolor='blue', edgecolor='blue', lw=4, zorder=2)
+        polygon2 = Polygon(transform(car, [xl,yl], dl), fill = True, facecolor='blue', edgecolor='blue', lw=4, zorder=2)
         ax.add_patch(polygon2)    
     ax.grid()
     # ax.set_xlabel('x(m)')
@@ -68,8 +72,9 @@ figure = pyplot.figure()
 pyplot.ion()
 pyplot.draw()
 
-pose = [-2.98, -1.01, 0.74]
-figure = visualize_jackal(figure, pose, img)
+initial_pose = [-2.98, -1.01, 0.74] # in m,m,rad
+initial_pose_in_map = [77.6, 41.2, -1.57] # in m,m,rad
+figure = visualize_jackal(figure, initial_pose_in_map, img)
 
 ack='\x00\x00\x00\x00\x00\x00\x00\x00'
 
@@ -84,6 +89,7 @@ while True:
             data = m.group(1).split(',')
             pose = (float(data[0]), float(data[1]), float(data[2]))
             print 'new pose %s' %str(pose)
+    pose_in_map = transpose(pose, initial_pose, initial_pose_in_map)
     figure = visualize_jackal(figure, pose, img)
 
 ser.close()
