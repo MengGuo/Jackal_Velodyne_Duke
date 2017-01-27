@@ -17,7 +17,7 @@ In particular, we use several [Xbee radio](https://www.digi.com/) modules from D
 
 
   <p align="center">  
-    <img src="https://github.com/MengGuo/Jackal_Velodyne_Duke/blob/master/xbee_communication/figures/xbee.png" width="500"/>
+    <img src="https://github.com/MengGuo/Jackal_Velodyne_Duke/blob/master/xbee_communication/figures/xbee.png" width="700"/>
   </p>
 
 
@@ -37,5 +37,5 @@ In order to send data automatically without using the GUI, we use the [Xbee-Pyth
 Particularly, we send a `1000*1000` matrix from the end node via [`tx_end_node.py`](https://github.com/MengGuo/Jackal_Velodyne_Duke/blob/master/xbee_communication/tx_end_node.py) and receive it at the coordinator via [`rx_coordinator.py`](https://github.com/MengGuo/Jackal_Velodyne_Duke/tree/master/xbee_communication).
 
   <p align="center">  
-    <img src="https://github.com/MengGuo/Jackal_Velodyne_Duke/blob/master/xbee_communication/figures/rviz_xbee_map.png" width="500"/>
+    <img src="https://github.com/MengGuo/Jackal_Velodyne_Duke/blob/master/xbee_communication/figures/rviz_xbee_map.png" width="700"/>
   </p>
