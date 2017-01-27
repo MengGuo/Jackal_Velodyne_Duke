@@ -16,6 +16,11 @@ Even though Jackal is equipped with powerful wifi/bluetooth communication module
 In particular, we use several [Xbee radio](https://www.digi.com/) modules from Digi, particularly, series 2 with protocol Zigbee. The serial to micro-USB dongle from [SparkFun](https://www.sparkfun.com/products/11812)  is used.
 
 
+  <p align="center">  
+    <img src="https://github.com/MengGuo/Jackal_Velodyne_Duke/blob/master/xbee_communication/figures/xbee.png" width="500"/>
+  </p>
+
+
 -----
 Data transfer in AT mode via XCTU
 -----
@@ -31,3 +36,6 @@ Data transfer in API mode via Xbee-Python
 In order to send data automatically without using the GUI, we use the [Xbee-Python](https://python-xbee.readthedocs.io/en/latest/) library.
 Particularly, we send a `1000*1000` matrix from the end node via [`tx_end_node.py`](https://github.com/MengGuo/Jackal_Velodyne_Duke/blob/master/xbee_communication/tx_end_node.py) and receive it at the coordinator via [`rx_coordinator.py`](https://github.com/MengGuo/Jackal_Velodyne_Duke/tree/master/xbee_communication).
 
+  <p align="center">  
+    <img src="https://github.com/MengGuo/Jackal_Velodyne_Duke/blob/master/xbee_communication/figures/rviz_xbee_map.png" width="500"/>
+  </p>
