@@ -42,7 +42,7 @@ Transmit Jackal pose via Xbee-Python
 -----
 
 To monitor Jackal's status without WiFi, we tried to transmit the Jackal pose estimation from [`amcl`] (https://github.com/MengGuo/Jackal_Velodyne_Duke/tree/master/navigation) via an end node attached to Jackal, see [`jackal_tx_pose.py`] (https://github.com/MengGuo/Jackal_Velodyne_Duke/blob/master/xbee_communication/jackal_tx_pose.py).
-On the other hand, a coordinator node can receive this data and display the absolute pose in the Hudson blueprint (`96m * 72m`), see [`rx_plot_pose_with_map.py`] (https://github.com/MengGuo/Jackal_Velodyne_Duke/blob/master/xbee_communication/rx_plot_pose_with_map.py). [`Video`] (https://vimeo.com/201570328).
+On the other hand, a coordinator node can receive this data and display the absolute pose in the Hudson blueprint (`96m * 72m`), see [`rx_plot_pose_with_map.py`] (https://github.com/MengGuo/Jackal_Velodyne_Duke/blob/master/xbee_communication/rx_plot_pose_with_map.py). See experiment [`Video`] (https://vimeo.com/201570328).
 
   <p align="center">  
     <img src="https://github.com/MengGuo/Jackal_Velodyne_Duke/blob/master/xbee_communication/figures/rviz_xbee_map.jpg" width="700"/>
